@@ -204,7 +204,7 @@ function refresh() {
   resetCards();
   turnOverAny();
   resetStars();
-  shuffleNodes();
+  shuffleCardsDOM();
   stopTimer();
   resetTimer();
   totalClicks = 0;
@@ -227,14 +227,11 @@ function shuffle(array) {
     return array;
   }
 
-// shuffleNodes function from https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
-function shuffleNodes() {
-  var nodes = cards.children, i = 0;
+function shuffleCardsDOM() {
+  let nodes = cards.children, card = 0;
   nodes = Array.prototype.slice.call(nodes);
   nodes = shuffle(nodes);
-  while(i < nodes.length)
-  {
-    cards.appendChild(nodes[i]);
-    ++i;
+  for (card=0; card < nodes.length; card++) {
+    cards.appendChild(nodes[card]);
   }
 }
