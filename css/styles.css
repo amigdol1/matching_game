@@ -116,6 +116,7 @@ li.star-img {
     top: 0;
     display: flex;
     justify-content: space-between;
+    padding-top: 10em;
 }
 
 .#modal-win-message {
