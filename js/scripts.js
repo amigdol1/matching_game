@@ -18,10 +18,38 @@ let cardMatch = [];
 let winArray = [];
 let totalTime;
 
+
 // shuffles cards on page load
 window.onload = function(event) {
   refresh();
 }
+
+refreshBtn.addEventListener("click", refresh);
+closeBtn.addEventListener("click", dismissModal);
+playAgainBtn.addEventListener("click", refresh);
+
+
+// called after all cards have been matched
+function win() {
+  if (cardList.length === liMatch.length) {
+    stopTimer();
+    displayModal();
+  }
+}
+
+// resets cards, points, timer, and moves back to original state and shuffles cards
+function refresh() {
+  dismissModal();
+  resetCards();
+  turnOverAny();
+  resetStars();
+  shuffleCardsDOM();
+  stopTimer();
+  resetTimer();
+  totalClicks = 0;
+  moves.innerHTML = `${totalClicks} Moves`;
+}
+
 // attach an image based on the class the card is assigned. done onload
 cardArray.forEach(function(card) {
   let imageContainer = card.querySelector('i');
@@ -131,16 +159,6 @@ function points() {
   }
 }
 
-function win() {
-  if (cardList.length === liMatch.length) {
-    stopTimer();
-    displayModal();
-  }
-}
-
-closeBtn.addEventListener("click", dismissModal);
-playAgainBtn.addEventListener("click", refresh);
-
 function dismissModal() {
   modal.style.display = "none";
 }
@@ -173,7 +191,7 @@ function getTime() {
    })
 }
 
-// formatTime function from https://www.youtube.com/watch?v=jRhB1IG7uAw
+// formatTime function adapted from https://www.youtube.com/watch?v=jRhB1IG7uAw - wrote from scratch after review
 // formats time into minutes and seconds
 function formatTime(milliSeconds) {
   let time = new Date(milliSeconds);
@@ -199,20 +217,6 @@ function resetTimer() {
   timer.innerHTML = "00:00";
 }
 
-function refresh() {
-  dismissModal();
-  resetCards();
-  turnOverAny();
-  resetStars();
-  shuffleCardsDOM();
-  stopTimer();
-  resetTimer();
-  totalClicks = 0;
-  moves.innerHTML = `${totalClicks} Moves`;
-}
-
-refreshBtn.addEventListener("click", refresh);
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -228,7 +232,7 @@ function shuffle(array) {
   }
 
 function shuffleCardsDOM() {
-  let nodes = cards.children, card = 0;
+  let nodes = cards.children
   nodes = Array.prototype.slice.call(nodes);
   nodes = shuffle(nodes);
   for (card=0; card < nodes.length; card++) {
