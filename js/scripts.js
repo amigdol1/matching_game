@@ -18,36 +18,13 @@ let cardMatch = [];
 let winArray = [];
 let totalTime;
 
-
-// shuffles cards on page load
-window.onload = function(event) {
-  refresh();
-}
-
 refreshBtn.addEventListener("click", refresh);
 closeBtn.addEventListener("click", dismissModal);
 playAgainBtn.addEventListener("click", refresh);
 
-
-// called after all cards have been matched
-function win() {
-  if (cardList.length === liMatch.length) {
-    stopTimer();
-    displayModal();
-  }
-}
-
-// resets cards, points, timer, and moves back to original state and shuffles cards
-function refresh() {
-  dismissModal();
-  resetCards();
-  turnOverAny();
-  resetStars();
-  shuffleCardsDOM();
-  stopTimer();
-  resetTimer();
-  totalClicks = 0;
-  moves.innerHTML = `${totalClicks} Moves`;
+// shuffles cards on page load
+window.onload = function(event) {
+  refresh();
 }
 
 // attach an image based on the class the card is assigned. done onload
@@ -212,7 +189,6 @@ function stopTimer() {
   clearInterval(totalTime);
 }
 
-
 function resetTimer() {
   timer.innerHTML = "00:00";
 }
@@ -238,4 +214,25 @@ function shuffleCardsDOM() {
   for (card=0; card < nodes.length; card++) {
     cards.appendChild(nodes[card]);
   }
+}
+
+// called after all cards have been matched
+function win() {
+  if (cardList.length === liMatch.length) {
+    stopTimer();
+    displayModal();
+  }
+}
+
+// resets cards, points, timer, and moves back to original state and shuffles cards
+function refresh() {
+  dismissModal();
+  resetCards();
+  turnOverAny();
+  resetStars();
+  shuffleCardsDOM();
+  stopTimer();
+  resetTimer();
+  totalClicks = 0;
+  moves.innerHTML = `${totalClicks} Moves`;
 }
