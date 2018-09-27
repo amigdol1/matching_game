@@ -1,4 +1,4 @@
-# Portfolio: A Site to Showcase Front-End Projects
+# Matching Game: A Test in Memory
 
 ## Description
 This is a memory logic game. The premise if for the user to flip cards over and match the once that have the same image. Once all of the images have been matched, the player wins the game.
