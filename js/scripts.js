@@ -203,8 +203,8 @@ function getTime() {
 // formats time into minutes and seconds
 function formatTime(milliSeconds) {
   let time = new Date(milliSeconds);
-  let seconds = time.getSeconds().toString();
-  let minutes = time.getMinutes().toString();
+  let seconds = time.getUTCSeconds().toString();
+  let minutes = time.getUTCMinutes().toString();
 
   if (seconds.length < 2) {
     seconds = `0${seconds}`;
