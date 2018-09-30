@@ -46,6 +46,7 @@ cardArray.forEach(function(card) {
     let imageContainer = card.querySelector('i');
     let className = imageContainer.className;
     cardMatch.push(className);
+    restrictClick();
     clickTracker();
     startTimer();
     checkCompare();
@@ -58,6 +59,7 @@ cardArray.forEach(function(card) {
 function checkCompare() {
   if (cardMatch.length === 2) {
     compareCards();
+    onlyTwo();
   }
 }
 
@@ -88,6 +90,8 @@ function turnOver(card) {
   for (card=0; card < cardArray.length; card++) {
     if (cardArray[card].classList.contains("match") === false) {
       cardArray[card].classList.remove("card-image");
+      cardArray[card].classList.remove("unclickable");
+      cards.classList.remove("unclickable");
     }
   }
 }
@@ -96,7 +100,23 @@ function turnOver(card) {
 function turnOverAny(card) {
   for (card=0; card < cardArray.length; card++) {
     cardArray[card].classList.remove("card-image");
+    cardArray[card].classList.remove("unclickable");
+    cards.classList.remove("unclickable");
   }
+}
+
+// Makes it so the same card being clicked doesn't increment the number of moves
+function restrictClick(card) {
+  for (card=0; card < cardArray.length; card++) {
+    if (cardArray[card].classList.contains("card-image")) {
+      cardArray[card].classList.add("unclickable");
+    }
+  }
+}
+
+// makes it so nothing else is clickable for cards - fixes a bug where I could briefly see a 3rd card
+function onlyTwo() {
+  cards.classList.add("unclickable");
 }
 
 // tracks the total number of clicks
@@ -131,8 +151,6 @@ function points() {
     removeLastSar();
   } else if (totalClicks === 40) {
     removeLastSar();
-  } else if (totalClicks === 50) {
-    removeLastSar();
   }
 }
 
@@ -142,7 +160,7 @@ function dismissModal() {
 
 function displayModal() {
   document.getElementById("modal-win-message").textContent =
-  `You're a winner! Your score was ${totalStars.length} stars
+  `You're a winner! Your score was ${totalStars.length} stars done in ${totalClicks} moves
   and was completed in ${timer.innerHTML}. `
   modal.style.display = "block";
 }
@@ -233,6 +251,7 @@ function refresh() {
   shuffleCardsDOM();
   stopTimer();
   resetTimer();
+  cardMatch=[];
   totalClicks = 0;
   moves.innerHTML = `${totalClicks} Moves`;
 }

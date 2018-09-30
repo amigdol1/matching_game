@@ -64,6 +64,10 @@ img {
   pointer-events: none;
 }
 
+.unclickable {
+  pointer-events: none;
+}
+
 button {
   height: 4em;
   width: 7em;
