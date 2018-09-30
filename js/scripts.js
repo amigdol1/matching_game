@@ -11,10 +11,11 @@ let removedStars = document.getElementsByClassName('remove-star');
 let moves = document.getElementById('moves');
 let closeBtn = document.getElementById('close');
 let modal = document.getElementById('modal');
-let liMatch = document.getElementsByClassName("match");
-let playAgainBtn = document.getElementById("play-again");
+let liMatch = document.getElementsByClassName('match');
+let playAgainBtn = document.getElementById('play-again');
 let totalClicks = 0;
 let cardMatch = [];
+let removedStarsArray = [];
 let winArray = [];
 let totalTime;
 
@@ -50,6 +51,7 @@ cardArray.forEach(function(card) {
     clickTracker();
     startTimer();
     checkCompare();
+    cardsClickable();
     points();
     win();
   });
@@ -119,6 +121,14 @@ function onlyTwo() {
   cards.classList.add("unclickable");
 }
 
+function cardsClickable() {
+  for (card=0; card < cardArray.length; card++) {
+    if (cards.classList.contains("unclickable") && (cardMatch.length < 2)) {
+      cards.classList.remove("unclickable");
+    }
+  }
+}
+
 // tracks the total number of clicks
 function clickTracker() {
   totalClicks += 1;
@@ -126,16 +136,19 @@ function clickTracker() {
 }
 
 //remove a the star that's at the end of the array
-function removeLastSar() {
+function removeLastStar() {
   let lastStar = totalStars.length - 1;
+  removedStarsArray.push(totalStars[lastStar]);
   totalStars[lastStar].classList.add("remove-star");
   totalStars[lastStar].classList.remove("star-img");
 }
 
 function resetStars() {
-  for (star=0; star < removedStars.length; star++) {
-    removedStars[star].classList.add("star-img");
-    removedStars[star].classList.remove("remove-star");
+  if (removedStarsArray.length > 0) {
+    for (star=0; star < removedStarsArray.length; star++) {
+      removedStarsArray[star].classList.add("star-img");
+      removedStarsArray[star].classList.remove("remove-star");
+    }
   }
 }
 
@@ -148,9 +161,9 @@ function resetCards() {
 // adjusts to number of stars based on the number of clicks
 function points() {
   if (totalClicks === 25) {
-    removeLastSar();
+    removeLastStar();
   } else if (totalClicks === 40) {
-    removeLastSar();
+    removeLastStar();
   }
 }
 
