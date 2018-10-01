@@ -66,6 +66,7 @@ var game = {
     this.cardsInCurrentMove = [];
   },
   addCardToMove: function(card) {
+    this.numberOfMoves += 1;
     this.cardsInCurrentMove.push(card);
     if (this.cardsInCurrentMove.length === this.numberOfCardsPerSet) {
       if (allCardsMatch(this.cardsInCurrentMove)) {
@@ -75,18 +76,20 @@ var game = {
       this.cardsInCurrentMove = [];
     };
     if (this.allSetsMatched()) {
-      console.log("youve won the game!!");
+      console.log(`Youve won the game in ${this.numberOfMoves} moves!`);
+      console.log(`Your score is ${calculateScore(this.numberOfMoves)}!`);
     }
   },
   allSetsMatched: function() {
     return this.sets.every(function(set) {
       return set.matched === true;
     })
+  },
+  gameDuration: function() {
+    return Date.now() - this.startTime;  
   }
 };
 
 
 game.setup();
-
-
 window.game = game;
